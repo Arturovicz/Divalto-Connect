@@ -1,0 +1,13 @@
+{% extends 'main/base.html' %}
+{% block title %}Divalto Connect - Login{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+    <form method="post" class="text-center">
+        <h1> Welcome to Diva<span class="text-warning">l</span>to <i>Connect</i> </h1>
+        {% csrf_token %}{{form|crispy}}
+        <p> If you don't have your credentials, refer to your manager</p>
+        <button type="submit" class="btn btn-warning">Log in</button>
+    </form>
+</div>
+{% endblock %}
