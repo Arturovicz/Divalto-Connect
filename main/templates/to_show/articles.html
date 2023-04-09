@@ -1,0 +1,121 @@
+{% extends 'main/base.html' %}
+{% block title %}Divalto Connect - Articles{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<style>
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .step-links {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+
+  .step-links a {
+    display: inline-block;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    margin-right: 5px;
+    font-size: 14px;
+    color: #666;
+    text-decoration: none;
+  }
+
+  .step-links a:hover {
+    background-color: #f2f2f2;
+  }
+
+  .current-page {
+    font-size: 16px;
+    font-weight: bold;
+    margin-right: 20px;
+  }
+</style>
+<div class="container-fluid my-5">
+  <div class="row">
+    <div class="col-md-8 offset-md-3">
+
+      <form class="d-flex mb-3" method="get">
+        <div class="form-group me-3">
+          <label for="search">Search:</label>
+          <input type="text" id="search" name="q" value="{{ request.GET.q }}" class="form-control">
+        </div>
+        <div class="form-group me-3">
+          <label for="search_option">Search by:</label>
+            <select id="search_option" name="search_option" class="form-control">
+              <option value="ref">Article Reference</option>
+              <option value="article_name">Article Label</option>
+              <option value="order_id">Order ID</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-warning">Search</button>
+    </form>
+
+
+      <div class="table-responsive w-100" >
+        <table class="table table-hover" style="">
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Article Reference</th>
+              <th>Article Label</th>
+              <th>Price</th>
+              <th>Order Number</th>
+              <th>Order date</th>
+              <th>Order Quantity</th>
+              <th>Delivery Number</th>
+              <th>Delivery Date</th>
+              <th>Delivery Quantity</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in articles %}
+            <tr>
+              <td>{{ row.order_id }}</td>
+              <td>{{ row.prod_ref }}</td>
+              <td>{{ row.prod_label }}</td>
+              <td>{{ row.order_price }}</td>
+              <td>{{ row.order_number }}</td>
+              <td>{{ row.order_date }}</td>
+              <td>{{ row.order_quantity }}</td>
+              <td>{{ row.delivery_number }}</td>
+              <td>{{ row.delivery_date }}</td>
+              <td>{{ row.delivery_quantity }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="8">No data available.</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+
+        <div class="pagination">
+          <span class="step-links">
+              {% if articles.has_previous %}
+                  <a href="?page=1">&laquo; first</a>
+                  <a href="?page={{ articles.previous_page_number }}">&lsaquo; prev</a>
+              {% endif %}
+
+              <span class="current-page">
+                  Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+              </span>
+
+              {% if articles.has_next %}
+                  <a href="?page={{ articles.next_page_number }}">next &rsaquo;</a>
+                  <a href="?page={{ articles.paginator.num_pages }}">last &raquo;</a>
+              {% endif %}
+          </span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

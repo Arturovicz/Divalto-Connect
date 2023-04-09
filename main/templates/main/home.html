@@ -1,0 +1,20 @@
+{% extends 'main/base.html' %}
+{% block title %}Home Page{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+  <form method="post" class="text-center">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <h2> Welcome to Diva<span class="text-warning">l</span>to <i>Connect</i> </h2>
+    <h5>-----------------------------------------------------</h5>
+    <a href="/articles" class="btn btn-warning me-3">See Articles</a>
+    <a href="http://localhost:8501/" class="btn btn-warning ">Plot Article Stock History</a>
+    <h5>-----------------------------------------------------</h5>
+  </form>
+</div>
+{% endblock %}
+
+
+
+
